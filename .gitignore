@@ -18,5 +18,4 @@ build
 .ruff_cache
 
 .tox
-.github
 node_modules
