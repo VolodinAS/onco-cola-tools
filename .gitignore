@@ -1,6 +1,12 @@
+# Global: IDE
 .idea
-.idea/*
+.idea/
+*.iml
+*.ipr
+*.iws
+
 .git
+
 __pycache__
 .venv
 venv
@@ -10,9 +16,7 @@ build
 .pytest_cache
 .mypy_cache
 .ruff_cache
-.idea
-__pycache__
+
 .tox
-.git
 .github
 node_modules
