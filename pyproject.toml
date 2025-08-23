@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 name = "onco-cola-utils"
 
 
-version = "0.2.0"
+version = "0.2.1"
 
 
 description = "Мои общие утилиты для работы с Excel"
