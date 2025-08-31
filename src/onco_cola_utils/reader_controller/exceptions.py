@@ -14,3 +14,8 @@ class WrongSheetListError(Exception):
 class LocalIDError(Exception):
     """Отсутствует local_id"""
     pass
+
+
+class EmptyIdfyNotNullDictException(Exception):
+    """Perfect-данные пусты"""
+    pass

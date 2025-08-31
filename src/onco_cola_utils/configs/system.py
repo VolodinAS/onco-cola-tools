@@ -12,3 +12,7 @@ class System:
     WARN: str = "!!!!!"
     FASIS: str = "field_asis"
     FTOBE: str = "field_tobe"
+
+class AsisTobe:
+    ASIS: str = "asis"
+    TOBE: str = "tobe"
