@@ -3,7 +3,6 @@ name = "onco-cola-utils"
 version = "0.4.3"
 description = "Мои общие утилиты для работы с Excel"
 authors = ["Volodin Alexandr Sergeevich <endocrinologist@ya.ru>"]
-license = "MIT"
 
 license = { text = "MIT" }
 
