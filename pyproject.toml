@@ -1,46 +1,23 @@
-[build-system]
-requires = [
-    "setuptools>=61.0",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
-
-[project]
+[tool.poetry]
 name = "onco-cola-utils"
-
-
-version = "0.2.4"
-
-
+version = "0.3.0"
 description = "Мои общие утилиты для работы с Excel"
-authors = [
-    { name = "Volodin Alexandr Sergeevich", email = "endocrinologist@ya.ru" }
-]
-license = { text = "MIT" }
-readme = "README.md"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-requires-python = ">=3.9"
-dependencies = [
-    "pandas>=1.5",
-    "openpyxl>=3.0",
-    "deprecated>=1.2",
-    "loguru",
-    "build>=1.3.0,<2.0.0",
-    "twine>=6.1.0,<7.0.0",
-    "tiktoken (>=0.11.0,<0.12.0)"
-]
+authors = ["Volodin Alexandr Sergeevich <endocrinologist@ya.ru>"]
+license = "MIT"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["onco_cola_utils*"]
-
-[tool.setuptools.package-dir]
-"" = "src"
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+pandas = ">=1.5"
+openpyxl = ">=3.0"
+deprecated = ">=1.2"
+loguru = "0.7.3"
+build = ">=1.3.0"
+twine = ">=6.1.0"
+tiktoken = ">=0.11.0"
 
 [tool.poetry.group.dev.dependencies]
 pathspec = "^0.12.1"
 
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
