@@ -12,6 +12,10 @@ class System:
     WARN: str = "!!!!!"
     FASIS: str = "field_asis"
     FTOBE: str = "field_tobe"
+    id: str = "id"
+    STATUS: str = "__STATUS__"
+    OVER_FULL_SKIP = {*FULL_SKIP, *DASHES}
+
 
 class AsisTobe:
     ASIS: str = "asis"
