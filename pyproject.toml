@@ -5,7 +5,15 @@ description = "Мои общие утилиты для работы с Excel"
 authors = ["Volodin Alexandr Sergeevich <endocrinologist@ya.ru>"]
 license = "MIT"
 
+license = { text = "MIT" }
+
 readme = "README.md"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
 
 homepage = "https://t.me/hitomamoru"  # опционально
 repository = "https://github.com/VolodinAS/onco-cola-tools"  # опционально
