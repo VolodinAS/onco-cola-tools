@@ -1,7 +1,7 @@
 from functools import cached_property
 from typing import Final, Optional
 
-from src.onco_cola_utils import log
+from ..logger import log
 
 
 print = log
