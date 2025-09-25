@@ -29,6 +29,7 @@ class ReaderController:
         skip_rows: int = 0,
         debug: bool = False,
     ):
+        self._debug: bool = debug
         self._is_new: bool = is_new
         self._file_path: Path = file_path
         self.check_exists()
@@ -37,7 +38,6 @@ class ReaderController:
         self._dataframe: list[dict] = []
         self._idfy_dataframe: dict = {}
         self._local_idfy_dataframe: dict = {}
-        self._debug: bool = debug
 
         self.check_writable()
 
