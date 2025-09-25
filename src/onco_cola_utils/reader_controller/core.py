@@ -21,7 +21,14 @@ print = log
 class ReaderController:
     """Контроллер для управления XLS(X) файлами"""
 
-    def __init__(self, file_path, file_output, is_new: bool = False, skip_rows: int = 0):
+    def __init__(
+        self,
+        file_path: Path,
+        file_output: Path,
+        is_new: bool = False,
+        skip_rows: int = 0,
+        debug: bool = False,
+    ):
         self._is_new: bool = is_new
         self._file_path: Path = file_path
         self.check_exists()
@@ -30,6 +37,7 @@ class ReaderController:
         self._dataframe: list[dict] = []
         self._idfy_dataframe: dict = {}
         self._local_idfy_dataframe: dict = {}
+        self._debug: bool = debug
 
         self.check_writable()
 
@@ -128,7 +136,7 @@ class ReaderController:
                 for sheet_name, data in new_sheets.items():
                     data.to_excel(writer, sheet_name=sheet_name, index=False)
 
-            logsuc(f"Лист '{sheet_names[0]}' удалён. Файл пересохранён.")
+            if self._debug: logsuc(f"Лист '{sheet_names[0]}' удалён. Файл пересохранён.")
         except PermissionError:
             raise PermissionError("Файл открыт в Excel — невозможно пересохранить.")
         except Exception as e:
@@ -156,7 +164,7 @@ class ReaderController:
         check_writable: bool = self.is_file_writable(same_file)
         if not check_writable:
             raise PermissionError("ФАЙЛ ОТКРЫТ И НЕДОСТУПЕН ДЛЯ ЗАПИСИ")
-        logsuc("Файл с данными существует")
+        if self._debug: logsuc("Файл с данными существует")
 
     def check_exists(self):
         """
@@ -166,9 +174,9 @@ class ReaderController:
         if not self._is_new:
             if not self._file_path.exists():
                 raise FileNotFoundError("Файл с данными не найден")
-            logsuc("Файл с данными доступен для записи")
+            if self._debug: logsuc("Файл с данными доступен для записи")
         else:
-            logsuc("Файл является новым и ожидает записи")
+            if self._debug: logsuc("Файл является новым и ожидает записи")
 
     def is_file_writable(self, same_file: bool = True) -> bool:
         """
