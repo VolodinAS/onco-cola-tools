@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "onco-cola-utils"
-version = "0.5.1"
+version = "0.5.2"
 description = "Мои общие утилиты для работы с Excel"
 authors = ["Volodin Alexandr Sergeevich <endocrinologist@ya.ru>"]
 
