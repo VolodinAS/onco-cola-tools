@@ -5,6 +5,7 @@ from typing import Any, Callable
 
 from loguru import logger
 
+
 logger.remove()
 
 # Добавляем новый обработчик с цветами как в стандартном debug
