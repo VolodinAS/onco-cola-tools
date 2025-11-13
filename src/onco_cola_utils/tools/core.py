@@ -1,9 +1,8 @@
 import json
 import re
 import shutil
-from itertools import islice
 from pathlib import Path
-from typing import Any, Final, Optional
+from typing import Any, Optional
 
 import tiktoken
 
@@ -12,6 +11,7 @@ from ..configs.system import AsisTobe
 from ..logger import log, logsuc
 from ..reader_controller.exceptions import EmptyIdfyNotNullDictException
 from ..reader_controller.types import IdfyGoods, IndexedIdfyGoods
+
 
 print = log
 
@@ -947,46 +947,60 @@ class Tools:
                 raise OSError(f"Ошибка при удалении {item}: {e}")
 
     @staticmethod
-    def parse_filename(filename):
+    def parse_filename(filename: str, is_filters: bool = False) -> tuple[int, str]:
         """
         Парсит имя файла формата "2417_Лестницы_и_стремянки_20250529_на_разметку.xlsx"
-        и возвращает категорию и название категории.
+        или "Фильтры_12990_Бокалы_и_стаканы_20250922_проверено.xlsx"
 
         Args:
-            filename (str): Имя файла для парсинга
+            filename: Имя файла для парсинга
+            is_filters: является ли файл названием фильтра
 
         Returns:
             tuple: (категория, название_категории)
         """
         # Удаляем расширение файла
-        name_without_ext = filename.split('.')[0]
+        name_without_ext = filename.rsplit('.', 1)[0]
 
         # Разбиваем по символу подчеркивания
         parts = name_without_ext.split('_')
 
-        # Категория - первая часть
-        # parts[0] = "123dwd"
-        category = parts[0]
-        if not category.isdigit():
-            raise ValueError("Категория должна состоять из цифр")
+        if is_filters:
+            # Для фильтров: пропускаем префикс "Фильтры" и берем следующую часть как категорию
+            if len(parts) < 2:
+                raise ValueError("Недостаточно частей в имени файла фильтра")
 
-        category = int(category)
+            # Пропускаем "Фильтры" и берем следующую часть как категорию
+            category_part = parts[1]
+            start_index = 2  # начинаем с части после категории
+        else:
+            # Обычный случай: первая часть - категория
+            if not parts:
+                raise ValueError("Пустое имя файла")
 
-        # Название категории - все части между категорией и датой
+            category_part = parts[0]
+            start_index = 1  # начинаем со второй части
+
+        # Проверяем что категория состоит из цифр
+        if not category_part.isdigit():
+            raise ValueError(f"Категория должна состоять из цифр, получено: {category_part}")
+
+        category = int(category_part)
+
         # Ищем индекс первой части, содержащей дату (формат YYYYMMDD)
         date_pattern = re.compile(r'^\d{8}$')
         date_index = None
 
-        for i, part in enumerate(parts):
+        for i, part in enumerate(parts[start_index:], start=start_index):
             if date_pattern.match(part):
                 date_index = i
                 break
 
         if date_index is None:
             # Если дата не найдена, берем все части после категории
-            name_parts = parts[1:]
+            name_parts = parts[start_index:]
         else:
-            name_parts = parts[1:date_index]
+            name_parts = parts[start_index:date_index]
 
         # Собираем название категории, заменяя подчеркивания на пробелы
         category_name = ' '.join(name_parts)
