@@ -2,8 +2,8 @@ import inspect
 from datetime import datetime, timedelta
 from typing import Any
 
-from src.onco_cola_utils.advanced_thread_processor.models import CompletionReport
-from src.onco_cola_utils.advanced_thread_processor.constants import TimeFormats
+from ..advanced_thread_processor.models import CompletionReport
+from ..advanced_thread_processor.constants import TimeFormats
 
 
 class TimeFormatter:

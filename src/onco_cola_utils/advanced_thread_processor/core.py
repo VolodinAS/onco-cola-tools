@@ -4,14 +4,14 @@ from datetime import datetime
 from threading import Lock
 from typing import Any, Callable, Dict, List, Optional
 
-from src.onco_cola_utils import log
-from src.onco_cola_utils.advanced_thread_processor.constants import DefaultValues, ErrorMessages
-from src.onco_cola_utils.advanced_thread_processor.models import (
+from ..logger import log
+from ..advanced_thread_processor.constants import DefaultValues, ErrorMessages
+from ..advanced_thread_processor.models import (
     AttemptInfo, CompletionReport,
     ItemProcessingResult,
     ProcessorStats, ThreadTiming
 )
-from src.onco_cola_utils.advanced_thread_processor.utils import (
+from ..advanced_thread_processor.utils import (
     MethodInspector,
     ProcessorLogger,
     TimeFormatter
