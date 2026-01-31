@@ -2,6 +2,7 @@ import inspect
 from datetime import datetime, timedelta
 from typing import Any
 
+from ..logger import logerr, logsuc, logwarn
 from ..advanced_thread_processor.models import CompletionReport
 from ..advanced_thread_processor.constants import TimeFormats
 
@@ -100,24 +101,26 @@ class ProcessorLogger:
     @staticmethod
     def log_attempt(
         thread_id: int, item: Any, attempt: int, max_attempts: int,
-        success: bool, error_msg: str = None, timeout: float = None
+        success: bool, error_msg: str = None, timeout: float = None,
+        _debug: bool = False,
     ):
         """Логирует информацию о попытке"""
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         status = "УСПЕШНО" if success else "ОШИБКА"
 
         if success:
-            print(
-                f"{timestamp} - [TH={thread_id}] Попытка {attempt}/{max_attempts}: {status} - {item}"
-            )
+            if _debug:
+                logsuc(
+                    f"{timestamp} - [TH={thread_id}] Попытка {attempt}/{max_attempts}: {status} - {item}"
+                )
         else:
             if attempt < max_attempts:
-                print(
+                logwarn(
                     f"{timestamp} - [TH={thread_id}] Попытка {attempt}/{max_attempts}: {status} - {item} | "
                     f"Ошибка: {error_msg} | Следующая попытка через: {timeout:.1f} сек."
                 )
             else:
-                print(
+                logerr(
                     f"{timestamp} - [TH={thread_id}] Попытка {attempt}/{max_attempts}: {status} - {item} | "
                     f"Ошибка: {error_msg} | ВСЕ ПОПЫТКИ ИСЧЕРПАНЫ!"
                 )
