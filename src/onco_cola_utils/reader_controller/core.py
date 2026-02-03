@@ -42,6 +42,23 @@ class ReaderController:
         
         self.check_writable()
     
+    def get_data(
+        self,
+        sheet_name: Optional[str] = None,
+        header_from: int = 0,
+        skip_rows: int = 0,
+        header_names: Optional[list] = None,
+    ):
+        """Получение данных если их нет"""
+        if not len(self._dataframe):
+            self.read_data(
+                sheet_name=sheet_name,
+                header_from=header_from,
+                skip_rows=skip_rows,
+                header_names=header_names,
+            )
+        return self._dataframe
+    
     def read_data(
         self,
         sheet_name: Optional[str] = None,
@@ -276,12 +293,6 @@ class ReaderController:
         elif isinstance(value, str):
             return value.strip()
         return str(value)
-    
-    def get_data(self, sheet_name: Optional[str] = None):
-        """Получение данных если их нет"""
-        if not len(self._dataframe):
-            self.read_data(sheet_name=sheet_name)
-        return self._dataframe
     
     def perfect_data(self, data_list: DFType):
         """Только не нульные строки"""
